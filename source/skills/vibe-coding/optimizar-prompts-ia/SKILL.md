@@ -28,10 +28,15 @@ entorno_optimizado:
       contenido_optimizado: string
       optimizaciones_aplicadas: string[]
   metricas:
-    tokens_totales: number
-    archivos_totales: number
-    reglas_totales: number
-    agentes_totales: number
+    cuantitativas:
+      tokens_totales: number
+      archivos_totales: number
+      reglas_totales: number
+      agentes_totales: number
+    cualitativas:
+      especificidad_prompts: enum[alta, media, baja]   # ¿Son concretos o abstractos?
+      cobertura_casos_borde: enum[alta, media, baja]   # ¿Cubren excepciones del negocio?
+      claridad_restricciones: enum[alta, media, baja]  # ¿Los "no hagas" son inequívocos?
   recomendaciones: string[]
 ```
 
@@ -91,6 +96,14 @@ Monitorear el consumo total de tokens del entorno:
 - Cada agente: máx 150 líneas
 - Cada rule: máx 50 líneas
 - Cada skill: máx 100 líneas
+
+### 6. Context Compression para IAs con Ventana Limitada
+Para Aider y Continue (context window reducido), aplicar:
+1. Eliminar ejemplos verbosos — mantener solo el más representativo por regla
+2. Reemplazar listas de reglas por tabla compacta con IDs
+3. Comprimir glosario a solo términos no-obvios (≤ 10 términos)
+4. Consolidar ADRs en resumen ejecutivo de una línea por decisión
+5. Resultado objetivo: contexto ≤40 líneas que la IA puede mantener en memoria de trabajo
 
 ## Reglas Internas
 1. La optimización NO cambia el contenido semántico, solo lo hace más efectivo.

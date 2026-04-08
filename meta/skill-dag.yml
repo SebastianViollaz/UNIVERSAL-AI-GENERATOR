@@ -1,0 +1,444 @@
+# DAG de Dependencias entre Skills
+# Cada skill declara sus dependencias (inputs) y lo que produce (outputs clave)
+# Usar este archivo para determinar el orden de ejecución correcto
+
+skills:
+
+  # ─── CAPA 1: Sin dependencias — se pueden ejecutar primero ───────────────────
+
+  analizar-dominio-negocio:
+    depends_on: []
+    produces:
+      - analisis_dominio
+      - procesos_principales
+      - roles_usuario
+      - regulaciones_aplicables
+      - preguntas_clarificacion
+    consumed_by:
+      - mapear-procesos-negocio
+      - disenar-agentes-negocio
+      - analizar-escalabilidad-negocio
+      - estructurar-agentes-tecnicos
+      - disenar-seguridad-sistema
+      - generar-instrucciones-workspace
+      - generar-convenciones-git
+
+  # ─── CAPA 2: Dependen solo de analizar-dominio-negocio ──────────────────────
+
+  mapear-procesos-negocio:
+    depends_on:
+      - analizar-dominio-negocio
+    produces:
+      - procesos_detallados
+    consumed_by:
+      - formalizar-reglas-negocio
+      - disenar-arquitectura-sistema
+      - definir-estrategia-testing
+      - generar-user-stories
+      - generar-ejemplos-interaccion
+      - verificar-trazabilidad
+
+  analizar-escalabilidad-negocio:
+    depends_on:
+      - analizar-dominio-negocio
+    produces:
+      - plan_escalabilidad
+    consumed_by:
+      - disenar-arquitectura-sistema
+      - planificar-infraestructura
+      - seleccionar-stack-tecnologico
+      - priorizar-backlog-inicial
+
+  disenar-agentes-negocio:
+    depends_on:
+      - analizar-dominio-negocio
+    produces:
+      - agentes_negocio
+    consumed_by:
+      - estructurar-agentes-tecnicos
+      - generar-protocolo-comunicacion
+      - generar-prompts-agentes
+      - generar-agentes-ia
+      - verificar-trazabilidad
+
+  # ─── CAPA 3: Dependen de capa 2 ──────────────────────────────────────────────
+
+  formalizar-reglas-negocio:
+    depends_on:
+      - mapear-procesos-negocio
+      - analizar-dominio-negocio
+    produces:
+      - reglas_negocio
+    consumed_by:
+      - disenar-arquitectura-sistema
+      - definir-estrategia-testing
+      - generar-agentes-ia
+      - generar-instrucciones-workspace
+      - generar-rules-ia
+      - generar-skills-ia
+      - generar-user-stories
+      - generar-modelo-datos-fisico
+      - generar-contrato-api
+      - verificar-trazabilidad
+      - generar-ejemplos-interaccion
+
+  seleccionar-stack-tecnologico:
+    depends_on:
+      - analizar-dominio-negocio
+      - analizar-escalabilidad-negocio
+    produces:
+      - stack_consolidado
+    consumed_by:
+      - estructurar-agentes-tecnicos      # valida/extiende el stack
+      - generar-instrucciones-workspace
+      - generar-rules-ia
+      - generar-skills-ia
+      - planificar-infraestructura
+      - generar-modelo-datos-fisico
+      - generar-contrato-api
+      - generar-convenciones-git
+      - generar-quick-start-guide
+      - generar-contexto-comprimido
+
+  estructurar-agentes-tecnicos:
+    depends_on:
+      - analizar-dominio-negocio
+      - disenar-agentes-negocio
+    produces:
+      - agentes_tecnicos
+      - stack_consolidado               # Fuente canónica del stack
+    consumed_by:
+      - disenar-arquitectura-sistema
+      - generar-protocolo-comunicacion
+      - generar-prompts-agentes
+      - generar-agentes-ia
+      - verificar-trazabilidad
+
+  # ─── CAPA 4: Dependen de reglas + stack + agentes ────────────────────────────
+
+  disenar-arquitectura-sistema:
+    depends_on:
+      - analizar-dominio-negocio
+      - mapear-procesos-negocio
+      - estructurar-agentes-tecnicos
+      - analizar-escalabilidad-negocio
+      - formalizar-reglas-negocio
+    produces:
+      - arquitectura
+    consumed_by:
+      - disenar-seguridad-sistema
+      - definir-estrategia-testing
+      - planificar-infraestructura
+      - generar-arbol-documentacion
+      - generar-instrucciones-workspace
+      - generar-rules-ia
+      - generar-skills-ia
+      - generar-modelo-datos-fisico
+      - generar-contrato-api
+      - verificar-trazabilidad
+      - generar-contexto-comprimido
+
+  generar-user-stories:
+    depends_on:
+      - mapear-procesos-negocio
+      - analizar-dominio-negocio          # roles_usuario
+      - formalizar-reglas-negocio
+    produces:
+      - user_stories
+    consumed_by:
+      - priorizar-backlog-inicial
+      - verificar-trazabilidad
+
+  # ─── CAPA 5: Dependen de arquitectura ────────────────────────────────────────
+
+  disenar-seguridad-sistema:
+    depends_on:
+      - analizar-dominio-negocio
+      - disenar-arquitectura-sistema
+    produces:
+      - modelo_seguridad
+    consumed_by:
+      - generar-rules-ia
+      - generar-skills-ia
+      - generar-instrucciones-workspace
+      - generar-agentes-ia
+      - generar-modelo-datos-fisico
+      - generar-contrato-api
+
+  definir-estrategia-testing:
+    depends_on:
+      - mapear-procesos-negocio
+      - formalizar-reglas-negocio
+      - disenar-arquitectura-sistema
+    produces:
+      - estrategia_testing
+    consumed_by:
+      - generar-rules-ia
+      - verificar-trazabilidad
+
+  planificar-infraestructura:
+    depends_on:
+      - disenar-arquitectura-sistema
+      - analizar-escalabilidad-negocio
+    produces:
+      - infraestructura
+    consumed_by:
+      - generar-arbol-documentacion
+      - generar-quick-start-guide
+
+  generar-modelo-datos-fisico:
+    depends_on:
+      - disenar-arquitectura-sistema
+      - formalizar-reglas-negocio
+      - disenar-seguridad-sistema
+    produces:
+      - modelo_datos_fisico
+    consumed_by:
+      - generar-arbol-documentacion
+
+  generar-contrato-api:
+    depends_on:
+      - disenar-arquitectura-sistema
+      - disenar-seguridad-sistema
+      - formalizar-reglas-negocio
+    produces:
+      - contratos_api
+    consumed_by:
+      - generar-arbol-documentacion
+
+  generar-convenciones-git:
+    depends_on:
+      - analizar-dominio-negocio
+      - analizar-escalabilidad-negocio
+    produces:
+      - convenciones_git
+    consumed_by:
+      - generar-arbol-documentacion
+
+  priorizar-backlog-inicial:
+    depends_on:
+      - generar-user-stories
+      - analizar-escalabilidad-negocio
+    produces:
+      - backlog_priorizado
+    consumed_by:
+      - generar-arbol-documentacion
+
+  # ─── CAPA 6: Generación del entorno ──────────────────────────────────────────
+
+  generar-protocolo-comunicacion:
+    depends_on:
+      - disenar-agentes-negocio
+      - estructurar-agentes-tecnicos
+    produces:
+      - protocolo_comunicacion
+    consumed_by:
+      - generar-prompts-agentes
+      - generar-agentes-ia
+
+  generar-prompts-agentes:
+    depends_on:
+      - disenar-agentes-negocio
+      - estructurar-agentes-tecnicos
+      - generar-protocolo-comunicacion
+      - analizar-dominio-negocio
+    produces:
+      - prompts_agentes
+    consumed_by:
+      - validar-entorno-generado
+      - exportar-entorno
+
+  generar-arbol-documentacion:
+    depends_on:
+      - analizar-dominio-negocio
+      - disenar-agentes-negocio
+      - estructurar-agentes-tecnicos
+      - mapear-procesos-negocio
+      - disenar-arquitectura-sistema
+      - formalizar-reglas-negocio
+      - disenar-seguridad-sistema
+      - planificar-infraestructura
+    produces:
+      - arbol_documentacion
+    consumed_by:
+      - validar-entorno-generado
+      - generar-quick-start-guide
+      - exportar-entorno
+
+  # ─── CAPA 7: Vibe coding ─────────────────────────────────────────────────────
+
+  generar-rules-ia:
+    depends_on:
+      - formalizar-reglas-negocio
+      - disenar-seguridad-sistema
+      - disenar-arquitectura-sistema
+      - definir-estrategia-testing
+    produces:
+      - rules_ia
+    consumed_by:
+      - optimizar-prompts-ia
+      - validar-entorno-generado
+
+  generar-skills-ia:
+    depends_on:
+      - formalizar-reglas-negocio
+      - mapear-procesos-negocio
+      - disenar-arquitectura-sistema
+      - disenar-seguridad-sistema
+    produces:
+      - skills_ia
+    consumed_by:
+      - optimizar-prompts-ia
+      - validar-entorno-generado
+      - generar-quick-start-guide
+
+  generar-instrucciones-workspace:
+    depends_on:
+      - analizar-dominio-negocio
+      - disenar-arquitectura-sistema
+      - formalizar-reglas-negocio
+      - disenar-seguridad-sistema
+      - estructurar-agentes-tecnicos    # stack_consolidado
+    produces:
+      - instrucciones_workspace
+    consumed_by:
+      - optimizar-prompts-ia
+      - generar-contexto-comprimido
+
+  generar-agentes-ia:
+    depends_on:
+      - disenar-agentes-negocio
+      - estructurar-agentes-tecnicos
+      - formalizar-reglas-negocio
+      - disenar-arquitectura-sistema
+      - analizar-dominio-negocio
+      - generar-protocolo-comunicacion
+    produces:
+      - agentes_ia
+    consumed_by:
+      - optimizar-prompts-ia
+      - validar-entorno-generado
+      - generar-quick-start-guide
+      - generar-ejemplos-interaccion
+
+  generar-ejemplos-interaccion:
+    depends_on:
+      - generar-agentes-ia
+      - mapear-procesos-negocio
+      - formalizar-reglas-negocio
+    produces:
+      - ejemplos_interaccion
+    consumed_by:
+      - generar-quick-start-guide
+
+  generar-contexto-comprimido:
+    depends_on:
+      - generar-instrucciones-workspace
+      - formalizar-reglas-negocio
+      - disenar-arquitectura-sistema
+      - estructurar-agentes-tecnicos    # stack_consolidado
+    produces:
+      - contexto_comprimido
+    consumed_by:
+      - exportar-entorno
+
+  # ─── CAPA 8: Optimización ────────────────────────────────────────────────────
+
+  optimizar-prompts-ia:
+    depends_on:
+      - generar-agentes-ia
+      - generar-instrucciones-workspace
+      - generar-rules-ia
+      - generar-skills-ia
+    produces:
+      - entorno_optimizado
+    consumed_by:
+      - validar-entorno-generado
+
+  # ─── CAPA 9: Validación ──────────────────────────────────────────────────────
+
+  verificar-trazabilidad:
+    depends_on:
+      - analizar-dominio-negocio
+      - mapear-procesos-negocio
+      - formalizar-reglas-negocio
+      - disenar-arquitectura-sistema
+      - disenar-agentes-negocio
+      - estructurar-agentes-tecnicos
+      - definir-estrategia-testing
+    produces:
+      - matriz_trazabilidad
+    consumed_by:
+      - validar-entorno-generado
+
+  validar-entorno-generado:
+    depends_on:
+      - generar-arbol-documentacion
+      - generar-prompts-agentes
+      - formalizar-reglas-negocio
+      - disenar-arquitectura-sistema
+      - generar-agentes-ia
+      - generar-rules-ia
+      - generar-skills-ia
+    produces:
+      - validacion
+    consumed_by:
+      - exportar-entorno
+
+  # ─── CAPA 10: Quick Start y Exportación ──────────────────────────────────────
+
+  generar-quick-start-guide:
+    depends_on:
+      - generar-arbol-documentacion
+      - generar-agentes-ia
+      - generar-skills-ia
+      - planificar-infraestructura
+      - estructurar-agentes-tecnicos    # stack_consolidado
+    produces:
+      - quick_start_guide
+    consumed_by:
+      - exportar-entorno
+
+  exportar-entorno:
+    depends_on:
+      - validar-entorno-generado        # Debe tener score >= 80
+      - generar-arbol-documentacion
+      - generar-prompts-agentes
+      - generar-quick-start-guide
+    produces:
+      - entorno_exportado
+    consumed_by: []                     # Fin del pipeline
+
+# ─── Orden recomendado de ejecución (lineal simplificado) ───────────────────
+# Para el meta-agente que ejecuta el pipeline completo:
+execution_order:
+  - analizar-dominio-negocio
+  - mapear-procesos-negocio
+  - analizar-escalabilidad-negocio
+  - disenar-agentes-negocio
+  - formalizar-reglas-negocio
+  - seleccionar-stack-tecnologico
+  - estructurar-agentes-tecnicos
+  - disenar-arquitectura-sistema
+  - disenar-seguridad-sistema
+  - definir-estrategia-testing
+  - planificar-infraestructura
+  - generar-user-stories
+  - priorizar-backlog-inicial
+  - generar-modelo-datos-fisico
+  - generar-contrato-api
+  - generar-convenciones-git
+  - generar-protocolo-comunicacion
+  - generar-prompts-agentes
+  - generar-arbol-documentacion
+  - generar-rules-ia
+  - generar-skills-ia
+  - generar-instrucciones-workspace
+  - generar-agentes-ia
+  - generar-ejemplos-interaccion
+  - generar-contexto-comprimido
+  - optimizar-prompts-ia
+  - verificar-trazabilidad
+  - validar-entorno-generado
+  - generar-quick-start-guide
+  - exportar-entorno

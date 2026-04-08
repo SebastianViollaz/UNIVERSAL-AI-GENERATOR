@@ -26,6 +26,10 @@ procesos_detallados:
     trigger: string
     precondiciones: string[]
     postcondiciones: string[]
+    sla_tiempo_maximo: string            # Tiempo máximo aceptable para completar el proceso
+    volumen_transacciones_estimado:      # Necesario para dimensionar arquitectura
+      por_dia: string
+      pico_maximo: string
     actores:
       - rol: string
         tipo: enum[primario, secundario, sistema]
@@ -35,6 +39,8 @@ procesos_detallados:
         accion: string
         sistema_responde: string
         datos_involucrados: string[]
+        tipo: enum[sincrono, asincrono]  # Impacta en colas, timeouts y UX
+        tiempo_esperado: string
     flujos_alternativos:
       - nombre: string
         desde_paso: number
@@ -62,3 +68,5 @@ procesos_detallados:
 2. Cada paso especifica qué datos se crean, leen, actualizan o eliminan.
 3. Las reglas de negocio deben ser atómicas y testeables.
 4. Incluir métricas que permitan medir la eficiencia del proceso.
+5. `sla_tiempo_maximo` es obligatorio para procesos con criticidad alta o crítica.
+6. `volumen_transacciones_estimado` es obligatorio para procesos continuos o diarios.

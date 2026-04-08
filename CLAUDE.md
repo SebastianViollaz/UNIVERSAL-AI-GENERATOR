@@ -8,13 +8,15 @@ Este es el repositorio del **Creador de Entornos Iniciales**, un meta-agente que
 source/                    ← Fuente canónica (agnóstica de IA)
 ├── instructions/          ← Instrucciones globales del workspace
 ├── rules/                 ← 7 archivos con 26 reglas (R-001 a R-026)
-├── agents/                ← negocio/ (3), tecnicos/ (4), vibe-coding/ (3)
-├── skills/                ← negocio/ (5), tecnico/ (5), orquestacion/ (5), vibe-coding/ (5)
+├── agents/                ← negocio/ (3+condicionales), tecnicos/ (4+condicionales), vibe-coding/ (3)
+├── skills/                ← negocio/ (7), tecnico/ (9), orquestacion/ (7), vibe-coding/ (7) = 30 skills
 └── prompts/               ← Prompts de ejecución
 
 export.py                  ← Exportador universal (6 IAs: Copilot, Claude, Cursor, Windsurf, Aider, Continue)
 templates/                 ← READMEs por formato de exportación
-meta/                      ← Configuración del pipeline (export-targets.yml)
+meta/                      ← Configuración del pipeline
+  ├── export-targets.yml   ← Mapeo de frontmatter por IA
+  └── skill-dag.yml        ← DAG de dependencias entre las 30 skills
 docs/                      ← Documentación completa del sistema (9 documentos)
 ```
 
@@ -41,11 +43,12 @@ docs/                      ← Documentación completa del sistema (9 documentos
 - `docs/02-arquitectura.md` — Pipeline de exportación completo
 - `docs/03-flujo-ejecucion.md` — Las 8 fases del sistema
 - `docs/04-agentes.md` — Los 10 agentes obligatorios + condicionales
-- `docs/05-skills.md` — Las 20 skills con inputs/outputs
+- `docs/05-skills.md` — Las 30 skills con inputs/outputs
 - `docs/06-reglas.md` — Las 26 reglas en 7 categorías
 - `docs/07-vibe-coding.md` — Materialización de agentes IA
 - `docs/08-export-pipeline.md` — Cómo export.py transforma cada formato
 - `docs/09-contribucion.md` — Cómo agregar agentes, skills, reglas, targets
+- `meta/skill-dag.yml` — DAG de dependencias y orden de ejecución de las 30 skills
 
 ## Agentes disponibles para este repositorio
 

@@ -34,6 +34,10 @@ protocolo_comunicacion:
       condicion: string
       accion: string
       responsable: string
+  sla_respuesta:
+    - tipo_interaccion: string
+      tiempo_maximo: string
+      accion_si_timeout: string          # Qué hace el agente solicitante si no hay respuesta
   resolucion_conflictos:
     - conflicto_tipo: string
       criterio_resolucion: string
@@ -41,10 +45,17 @@ protocolo_comunicacion:
   trazabilidad:
     formato_log: string
     que_se_registra: string[]
+  ejemplos_conversacion:               # Ejemplos de intercambios reales entre agentes
+    - agente_solicitante: string
+      agente_receptor: string
+      proposito: string
+      mensaje: string
+      respuesta_esperada: string
 ```
 
 ## Reglas Internas
 1. Todo mensaje entre agentes es trazable.
 2. Los conflictos negocio vs. técnico se resuelven con datos, no con jerarquía.
-3. SLA de respuesta para evitar bloqueos.
+3. SLA de respuesta definido para cada tipo de interacción con acción de timeout explicitada.
 4. Mecanismo de veto: un agente de negocio puede vetar una decisión técnica si viola reglas del dominio.
+5. Los `ejemplos_conversacion` deben cubrir al menos: consulta técnica simple, conflicto de prioridades, y escalamiento.

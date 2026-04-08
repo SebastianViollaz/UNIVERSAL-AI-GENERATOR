@@ -39,9 +39,12 @@ estrategia_testing:
       tipo_test_requerido: string[]
       escenarios_criticos:
         - escenario: string
-          dato_entrada: string
-          resultado_esperado: string
           regla_negocio_validada: string
+          gherkin:                       # Directamente usable en tests de aceptación
+            dado: string
+            cuando: string
+            entonces: string
+            y: string[]                  # Condiciones adicionales (opcional)
   testing_no_funcional:
     performance:
       herramientas: string[]
@@ -56,10 +59,15 @@ estrategia_testing:
     cuando_ejecutar: string
     gates_de_calidad: string[]
     tiempo_maximo_pipeline: string
-```
+  test_data_management:
+    estrategia: enum[fixtures, factories, seeders, mocks]
+    datos_sensibles: string             # Cómo manejar PII en tests (anonimizar, sintetizar)
+    consistencia: string                # Cómo garantizar que los datos respetan reglas de negocio
+    herramientas: string[]
 
 ## Reglas Internas
 1. Los procesos críticos del negocio tienen cobertura E2E completa.
-2. Cada regla de negocio formalizada tiene al menos un test asociado.
+2. Cada regla de negocio formalizada tiene al menos un test asociado con formato Gherkin.
 3. Tests de seguridad obligatorios si hay datos personales o financieros.
 4. Priorizar por riesgo de negocio, no por cobertura numérica.
+5. La estrategia de `test_data_management` es obligatoria si hay reglas de negocio sobre integridad de datos.

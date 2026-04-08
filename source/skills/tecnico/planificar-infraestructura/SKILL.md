@@ -23,7 +23,7 @@ infraestructura:
   ambiente_desarrollo:
     setup: string[]
     herramientas: string[]
-    docker_compose: boolean
+    docker_compose_esqueleto: string     # YAML base funcional con servicios del stack
   ambiente_produccion:
     proveedor: string
     servicios: string[]
@@ -42,10 +42,17 @@ infraestructura:
   costos_estimados:
     mvp: string
     crecimiento_fase_1: string
-```
+  secrets_management:                    # Sin esto cada proyecto inventa su propia solución
+    estrategia: enum[env_files, vault, cloud_secrets_manager, dotenv_vault]
+    por_ambiente:
+      desarrollo: string
+      staging: string
+      produccion: string
+    nunca_hacer: string[]               # Ej: no commitear .env, no hardcodear en código
 
 ## Reglas Internas
 1. Siempre incluir métricas de negocio en monitoring, no solo técnicas.
 2. Disaster recovery si la criticidad del negocio es alta.
 3. Costos alineados con fases de escalabilidad del negocio.
-4. Docker es el default para desarrollo; justificar si se omite.
+4. `docker_compose_esqueleto` es el YAML funcional base, no un booleano.
+5. `secrets_management` es obligatorio — nunca dejar esta decisión al desarrollador.

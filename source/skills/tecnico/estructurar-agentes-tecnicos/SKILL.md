@@ -50,8 +50,32 @@ agentes_tecnicos:
       - agente: string
         tipo_interaccion: string
         frecuencia: string
-    prompt_base: string
-```
+    restricciones_explicitas: string[]   # Cosas que este agente NO debe hacer
+    prompt_base:                         # Estructura mínima obligatoria
+      identidad: string                  # "Eres {rol} técnico del proyecto {nombre}. {contexto_tecnico_1_parrafo}"
+      contexto_negocio: string           # Por qué existe este rol desde la perspectiva del negocio
+      decisiones_que_toma: string[]      # Decisiones técnicas autónomas
+      restricciones_tecnicas: string[]   # Estilo de código, patrones prohibidos, tecnologías vetadas
+      agente_negocio_contraparte: string # El agente de negocio con quien coordina
+stack_consolidado:                       # Objeto único consumido por instrucciones-workspace, rules-ia, skills-ia
+  backend:
+    tecnologia: string
+    version: string
+    justificacion: string
+  frontend:
+    tecnologia: string
+    version: string
+    justificacion: string
+  base_datos_principal:
+    tecnologia: string
+    justificacion: string
+  cache: string
+  cola_mensajes: string
+  infra: string
+  testing:
+    unitarios: string
+    integracion: string
+    e2e: string
 
 ## Reglas Internas
 1. Mínimo 4 agentes técnicos: arquitecto, backend, frontend, QA/testing.
@@ -59,3 +83,4 @@ agentes_tecnicos:
 3. Si hay integraciones externas complejas, agregar agente de integraciones.
 4. Cada agente técnico tiene al menos un agente de negocio como contraparte.
 5. Las justificaciones del stack son técnicas Y de negocio.
+6. Producir `stack_consolidado` obligatoriamente — es el único objeto `stack` del sistema; otras skills lo consumen.

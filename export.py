@@ -323,30 +323,47 @@ def export_windsurf(output_dir: Path):
 def export_aider(output_dir: Path):
     print("  Exportando para Aider...")
 
+    # Aider has a limited context window: order by descending priority so the
+    # most actionable content appears first in CONVENTIONS.md.
+    # Priority: stack/conventions > security/quality > execution rules >
+    #           vibe-coding agents > other agents > skills
+
     sections = []
 
-    # Workspace instructions
+    # 1. Workspace instructions (identity + flujo de trabajo obligatorio)
     ws = read_file(SOURCE_DIR / "instructions" / "workspace.md")
     sections.append(strip_frontmatter(ws))
 
-    # Concatenate all rules
+    # 2. Rules — ordered by priority (vibe-coding → quality → security → others)
+    RULE_PRIORITY = ["07-vibe-coding", "02-calidad", "06-validacion", "01-separacion",
+                     "05-escalabilidad", "04-comunicacion", "03-formato"]
+    rule_files_by_stem: dict[str, Path] = {
+        f.stem: f for f in get_source_files("rules")
+    }
+    ordered_rules: list[Path] = (
+        [rule_files_by_stem[s] for s in RULE_PRIORITY if s in rule_files_by_stem]
+        + [f for f in get_source_files("rules") if f.stem not in RULE_PRIORITY]
+    )
     sections.append("\n---\n\n# Reglas de Ejecución\n")
-    for rule_file in get_source_files("rules"):
-        content = read_file(rule_file)
-        sections.append(strip_frontmatter(content))
+    for rule_file in ordered_rules:
+        sections.append(strip_frontmatter(read_file(rule_file)))
 
-    # Concatenate agent summaries
+    # 3. Agents — vibe-coding first (most relevant for coding sessions), then others
     sections.append("\n---\n\n# Agentes del Sistema\n")
-    for agent_dir in ["agents/negocio", "agents/tecnicos", "agents/vibe-coding"]:
+    for agent_dir in ["agents/vibe-coding", "agents/negocio", "agents/tecnicos"]:
         for agent_file in get_source_files(agent_dir):
-            content = read_file(agent_file)
-            sections.append(strip_frontmatter(content))
+            if agent_file.stem == "condicionales":
+                continue
+            sections.append(strip_frontmatter(read_file(agent_file)))
 
-    # Concatenate skill summaries
+    # 4. Skills — summarized as a single table of contents to preserve token budget
     sections.append("\n---\n\n# Skills Disponibles\n")
     for skill_md in get_skill_folders():
         content = read_file(skill_md)
-        sections.append(strip_frontmatter(content))
+        fm = extract_frontmatter(content)
+        skill_name = skill_md.parent.name
+        desc = fm.get("description", "")
+        sections.append(f"- **{skill_name}** — {desc}")
 
     write_file(output_dir / "CONVENTIONS.md", "\n\n".join(sections))
 

@@ -27,11 +27,18 @@ reglas_negocio:
     condicion: string
     accion: string
     excepcion: string
+    impacto_si_se_viola:                 # Clarifica prioridad de implementación
+      tipo: enum[legal, financiero, operacional, reputacional]
+      severidad: enum[critico, alto, medio, bajo]
+      descripcion: string
     procesos_afectados: string[]
     datos_involucrados: string[]
     fuente: string
     prioridad: enum[obligatoria, recomendada, opcional]
-    criterio_test: string
+    criterio_test:                       # Formato Gherkin para uso directo en tests de aceptación
+      dado: string
+      cuando: string
+      entonces: string
     ejemplos:
       - caso: string
         input: string
@@ -41,5 +48,6 @@ reglas_negocio:
 ## Reglas Internas
 1. Cada regla debe tener al menos un ejemplo concreto.
 2. Las reglas deben ser independientes entre sí (atómicas).
-3. El criterio de test debe ser ejecutable, no ambiguo.
+3. El `criterio_test` usa formato Gherkin (Dado/Cuando/Entonces) — ejecutable directamente como test de aceptación.
 4. Priorizar reglas que provienen de regulaciones legales.
+5. El `impacto_si_se_viola` determina el orden de implementación: las de tipo legal/crítico van en el MVP.

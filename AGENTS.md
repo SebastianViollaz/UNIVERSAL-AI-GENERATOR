@@ -70,19 +70,27 @@ Cuando el usuario describe un proyecto (ej: "ERP para empresa familiar", "CRM de
 - `mapear-procesos-negocio` — Detallar flujos con excepciones y métricas
 - `analizar-escalabilidad-negocio` — Proyectar fases de crecimiento
 - `formalizar-reglas-negocio` — Convertir reglas en specs testeables
+- `generar-user-stories` — Transformar procesos en user stories con criterios Gherkin
+- `priorizar-backlog-inicial` — Priorizar MVP con MoSCoW y sprints estimados
 
 ### Técnico
-- `estructurar-agentes-tecnicos` — Definir roles técnicos
+- `seleccionar-stack-tecnologico` — Consolidar el objeto stack que consume todo el sistema
+- `estructurar-agentes-tecnicos` — Definir roles técnicos y producir stack_consolidado
 - `disenar-arquitectura-sistema` — Arquitectura, ADRs, modelo de datos
 - `definir-estrategia-testing` — Testing priorizado por riesgo de negocio
 - `disenar-seguridad-sistema` — Threat model, auth, OWASP
 - `planificar-infraestructura` — CI/CD, monitoring, deployment
+- `generar-modelo-datos-fisico` — SQL ejecutable con tipos, índices y migraciones
+- `generar-contrato-api` — OpenAPI 3.0 por módulo + colección Postman
+- `generar-convenciones-git` — Branching model, commit format, PR templates
 
 ### Orquestación
 - `generar-arbol-documentacion` — Esqueleto completo del proyecto
 - `generar-prompts-agentes` — Prompts listos para cada agente
 - `generar-protocolo-comunicacion` — Reglas de comunicación inter-agentes
+- `verificar-trazabilidad` — Matriz requerimiento → proceso → regla → módulo → test
 - `validar-entorno-generado` — Validación de calidad pre-entrega
+- `generar-quick-start-guide` — Guía de onboarding en < 5 minutos
 - `exportar-entorno` — Empaquetar para IA objetivo
 
 ### Vibe Coding (materializan agentes y configuración para la IA de codificación)
@@ -90,6 +98,8 @@ Cuando el usuario describe un proyecto (ej: "ERP para empresa familiar", "CRM de
 - `generar-instrucciones-workspace` — Produce copilot-instructions.md/CLAUDE.md con glosario y convenciones
 - `generar-rules-ia` — Traduce reglas de negocio en restricciones de código por módulo
 - `generar-skills-ia` — Crea skills del proyecto (revisar reglas, consultar ADRs, generar tests)
+- `generar-ejemplos-interaccion` — Conversaciones ejemplo por agente con context reload
+- `generar-contexto-comprimido` — Contexto completo comprimido para IAs con ventana limitada
 - `optimizar-prompts-ia` — Optimiza tokens, deduplica contexto, ordena por prioridad
 
 ## Reglas de Ejecución

@@ -20,8 +20,31 @@ Genera skills invocables por los agentes IA dentro del proyecto. Estas skills NO
 | `procesos_negocio` | object[] | Sí | Procesos mapeados |
 | `arquitectura` | object | Sí | Decisiones de arquitectura |
 | `modelo_seguridad` | object | Sí | Modelo de amenazas |
-| `stack` | object | Sí | Stack tecnológico |
+| `stack` | object | Sí | Output de `stack_consolidado` de `estructurar_agentes_tecnicos` |
 | `ia_objetivo` | string | Sí | IA para la que generar |
+
+## Template Mínimo Obligatorio para Toda Skill Generada
+```markdown
+---
+name: {nombre-skill}
+description: "{descripción precisa}"
+---
+
+# Skill: {Nombre Legible}
+
+## Contexto de Negocio
+{Por qué existe esta skill desde la perspectiva del negocio}
+Reglas relacionadas: {IDs RN-XXX aplicables}
+
+## Proceso
+1. Recibe: {input}
+2. Hace: {acción concreta}
+3. Retorna: {output accionable}
+
+## Ejemplo
+Input: "{ejemplo_real_del_dominio}"
+Output: {resultado_esperado}
+```
 
 ## Outputs
 
@@ -166,3 +189,5 @@ description: "Scaffolding de un nuevo módulo siguiendo la arquitectura y conven
 3. El output de cada skill es accionable: código, checklist o diagnóstico.
 4. Las skills de negocio NO generan código; las técnicas SÍ.
 5. Toda skill de testing vincula a la regla de negocio que verifica.
+6. Todas las skills generadas siguen el template mínimo: frontmatter + Contexto de Negocio + Proceso + Ejemplo.
+7. La sección "Contexto de Negocio" inyecta los IDs de reglas relevantes directamente en la skill.

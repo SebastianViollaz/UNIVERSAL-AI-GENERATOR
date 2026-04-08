@@ -30,14 +30,20 @@ agentes_ia:
   archivos:
     - ruta: string
       nombre_agente: string
-      tipo: enum[negocio, tecnico, orquestador]
+      tipo: enum[negocio, tecnico, orquestador, vibe-coding]
       contenido_completo: string    # Archivo listo para escribir
       herramientas: string[]
       formato: string               # agent.md, .mdc, etc.
+      lineas_totales: number        # Para verificar token budget
+      token_budget_warning: boolean # true si supera 150 líneas
   orquestador:
     ruta: string
     contenido_completo: string
-    tabla_decision: string          # Cuándo activar cada agente
+    tabla_decision: string          # Tabla Markdown: | Activador | Agente | Cuándo NO usar |
+  validacion_token_budget:
+    total_archivos: number
+    archivos_sobre_limite: string[] # Rutas de archivos que superan el budget
+    accion_recomendada: string
 ```
 
 ## Proceso de Generación
@@ -145,3 +151,6 @@ tools:
 3. Los agentes técnicos incluyen las reglas de negocio que les afectan como restricciones hard.
 4. El archivo generado es sintácticamente válido para la IA objetivo (frontmatter correcto).
 5. Los ejemplos de interacción usan terminología del dominio real del proyecto.
+6. Cada agente incluye al inicio de sus respuestas largas: regla/módulo en curso (heartbeat de contexto).
+7. Verificar token budget durante generación: agentes > 150 líneas se marcan con `token_budget_warning: true` y se comprimen.
+8. La `tabla_decision` del orquestador tiene 3 columnas: Activador | Agente a Llamar | Cuándo NO Usar.

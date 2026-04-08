@@ -27,7 +27,8 @@ entorno_exportado:
       contenido: string
   instrucciones_instalacion: string[]
   primer_paso_recomendado: string
-```
+  comando_verificacion: string         # Primer prompt para validar que la IA reconoce el contexto
+  prioridad_contexto: string[]         # Para IAs con context limitado: orden de carga prioritario
 
 ## Mapeo de Rutas por IA
 
@@ -68,7 +69,12 @@ docs/                               ← documentación
 
 ### Aider
 ```
-CONVENTIONS.md                      ← todo concatenado
+CONVENTIONS.md                      ← todo concatenado en orden de prioridad:
+                                       1. Stack y convenciones
+                                       2. Reglas de seguridad
+                                       3. Top-10 reglas de negocio críticas
+                                       4. Arquitectura resumida
+                                       5. Glosario (solo términos ambiguos)
 .aider.conf.yml                     ← config con read: CONVENTIONS.md
 docs/                               ← documentación
 ```
@@ -86,3 +92,5 @@ docs/                               ← documentación
 3. El primer paso recomendado da el mayor valor inmediato.
 4. Adaptar la estructura de archivos al IDE objetivo.
 5. La carpeta `docs/` es siempre igual sin importar la IA.
+6. El `comando_verificacion` es el primer mensaje que el desarrollador enviará para confirmar que el contexto fue cargado.
+7. Para Aider y Continue, el `prioridad_contexto` determina qué incluir si se excede el context window.

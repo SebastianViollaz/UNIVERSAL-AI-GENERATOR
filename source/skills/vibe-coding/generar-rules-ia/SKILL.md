@@ -20,8 +20,15 @@ Genera reglas de codificación que las herramientas de Vibe Coding aplican autom
 | `modelo_seguridad` | object | Sí | Output de `disenar_seguridad_sistema` |
 | `arquitectura` | object | Sí | Output de `disenar_arquitectura_sistema` |
 | `estrategia_testing` | object | Sí | Output de `definir_estrategia_testing` |
-| `stack` | object | Sí | Stack tecnológico |
+| `stack` | object | Sí | Output de `stack_consolidado` de `estructurar_agentes_tecnicos` |
 | `ia_objetivo` | string | Sí | IA para la que generar |
+
+## Convención de Naming para IDs de Reglas
+Todas las reglas generadas siguen el formato `{DOMINIO}-{NNN}` para trazabilidad:
+- `SEC-001` — Regla de seguridad
+- `ARCH-001` — Regla de arquitectura
+- `TEST-001` — Regla de testing
+- `{MÓDULO}-001` — Regla de módulo específico (ej: `FACT-001`, `AUTH-001`)
 
 ## Outputs
 
@@ -108,6 +115,17 @@ applyTo: "**/*.test.*"
 - Todo test de negocio debe referenciar la regla que verifica: `// Verifica RN-FACT-001`.
 - Mocks solo para dependencias externas. Dominio NUNCA se mockea.
 - Cada endpoint público tiene al menos: happy path, validación de input, caso de auth.
+- Cobertura mínima en módulos críticos: {gates_de_calidad_de_estrategia_testing}.
+```
+
+### 5. Antipatrones con Ejemplos: Contraste Negativo-Positivo
+Para cada regla crítica de negocio, incluir contraste visual:
+```markdown
+❌ INCORRECTO: `const tax = amount * 0.16`
+✅ CORRECTO: `const tax = TaxCalculatorService.calculate(amount, TaxType.IVA) // RN-FACT-001`
+
+❌ INCORRECTO: `await db.query('SELECT * FROM users WHERE id = ' + userId)`
+✅ CORRECTO: `await db.query('SELECT * FROM users WHERE id = $1', [userId]) // SEC-003`
 ```
 
 ## Formato por IA
@@ -121,8 +139,9 @@ applyTo: "**/*.test.*"
 | Continue | `.md` | `.continue/rules/` | `alwaysApply`, `globs` |
 
 ## Reglas Internas
-1. Cada regla cita la fuente: regla de negocio, ADR, o requisito de seguridad.
+1. Cada regla cita la fuente: regla de negocio (RN-XXX), ADR, o requisito de seguridad (SEC-XXX).
 2. Las reglas son imperativas y concretas, no sugerencias vagas.
 3. Las reglas por módulo son más específicas que las globales (override implícito).
 4. Máximo 30 reglas globales (más de eso confunde a la IA).
 5. Las reglas de testing son obligatoriamente vinculadas a reglas de negocio.
+6. Toda regla crítica incluye contraste negativo-positivo con ejemplo de código.

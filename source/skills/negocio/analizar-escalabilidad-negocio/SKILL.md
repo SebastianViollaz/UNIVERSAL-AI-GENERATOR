@@ -13,7 +13,6 @@ Evalúa el potencial de crecimiento del negocio y diseña las fases de evolució
 | Parámetro | Tipo | Requerido | Descripción |
 |-----------|------|-----------|-------------|
 | `analisis_dominio` | object | Sí | Output de `analizar_dominio_negocio` |
-| `agentes_negocio` | object[] | Sí | Agentes de negocio diseñados |
 | `horizonte_temporal` | string | No | Período de proyección (default: "3 años") |
 
 ## Outputs
@@ -29,6 +28,9 @@ plan_escalabilidad:
   fases_crecimiento:
     - nombre: string
       trigger_de_fase: string
+      kpis_que_disparan_fase:            # Métricas medibles que indican que es hora de pasar a esta fase
+        - kpi: string
+          umbral: string
       nuevas_funcionalidades: string[]
       nuevos_procesos: string[]
       nuevas_integraciones: string[]
@@ -48,6 +50,7 @@ plan_escalabilidad:
 
 ## Reglas Internas
 1. Siempre proyectar mínimo 3 fases de crecimiento.
-2. Cada fase tiene un trigger medible, no basado en tiempo arbitrario.
+2. Cada fase tiene un trigger medible con `kpis_que_disparan_fase`, no basado en tiempo arbitrario.
 3. Las decisiones preventivas balancean costo actual vs. deuda técnica futura.
 4. Considerar pivotes de negocio realistas según el rubro.
+5. Puede ejecutarse inmediatamente después de `analizar_dominio_negocio` — no requiere agentes de negocio definidos.

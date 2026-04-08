@@ -39,7 +39,13 @@ prompts_agentes:
   orquestador:
     prompt_completo: string
     ruta: string
-    flujo_decisiones: string
+    flujo_decisiones: string            # Tabla Markdown: activador | agente | contexto requerido
+  vibe_coding:
+    - agente_id: string
+      nombre_archivo: string
+      ruta: string
+      prompt_completo: string
+      restricciones_explicitas: string[] # Cosas que los agentes vibe-coding NO deben hacer
 ```
 
 ## Formatos por IA Objetivo
@@ -57,4 +63,6 @@ prompts_agentes:
 1. Cada prompt incluye: identidad, contexto del dominio, responsabilidades, restricciones y formato de respuesta.
 2. Los prompts de negocio funcionan sin conocimiento técnico.
 3. Los prompts técnicos referencian decisiones de negocio como restricciones.
-4. Generar un prompt orquestador que sepa cuándo activar cada agente.
+4. Generar un prompt orquestador con tabla de decisión estructurada (activador | agente | contexto).
+5. Cada prompt incluye `restricciones_explicitas` — fundamental para Claude que tiende a ser proactivo.
+6. Los prompts de vibe-coding cubren los 3 agentes: generador, configurador y orquestador.

@@ -30,6 +30,10 @@ modelo_seguridad:
     mfa_requerido: boolean
     politica_passwords: string
     proveedor: string
+    politica_rotacion_secretos:          # API keys, tokens, certificados
+      frecuencia: string
+      proceso: string
+      donde_se_almacenan: string         # Vault, env vars, secrets manager
   autorizacion:
     modelo: enum[RBAC, ABAC, mixto]
     roles:
@@ -49,10 +53,17 @@ modelo_seguridad:
     - regulacion: string
       requerimientos: string[]
       como_se_cumple: string[]
-```
+  plan_respuesta_incidentes:             # Condicional: obligatorio si hay datos financieros o de salud
+    deteccion: string
+    contencion: string
+    notificacion_usuarios: string
+    notificacion_regulatoria: string
+    recuperacion: string
+    post_mortem: string
 
 ## Reglas Internas
 1. Si hay datos personales, protección de datos local es obligatoria.
 2. Siempre modelar al menos 5 amenazas del OWASP Top 10.
 3. El modelo de autorización refleja exactamente los roles de negocio.
-4. Plan de respuesta a incidentes si hay datos financieros o de salud.
+4. `plan_respuesta_incidentes` es obligatorio si hay datos financieros o de salud.
+5. `politica_rotacion_secretos` es obligatoria para proyectos con >1 integración externa.

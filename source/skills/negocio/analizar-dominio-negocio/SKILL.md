@@ -57,10 +57,24 @@ analisis_dominio:
       probabilidad: enum[alta, media, baja]
       impacto: enum[alto, medio, bajo]
       mitigacion: string
+  referentes_mercado:
+    - nombre: string
+      tipo: enum[competidor_directo, referente_industria, producto_alternativo]
+      diferenciador_vs_este_proyecto: string
+  oportunidades_quick_wins:
+    - oportunidad: string
+      impacto_estimado: enum[alto, medio, bajo]
+      esfuerzo_estimado: enum[alto, medio, bajo]
+      proceso_relacionado: string
+  preguntas_clarificacion:
+    - pregunta: string
+      campo_afectado: string
+      urgencia: enum[bloquea_analisis, mejora_calidad, opcional]
 ```
 
 ## Reglas Internas
 1. Nunca asumir procesos genéricos. Investigar particularidades del rubro.
-2. Si la descripción es vaga, generar preguntas de clarificación antes del análisis.
-3. Siempre identificar al menos 3 procesos principales y 2 oportunidades de mejora.
+2. Si la descripción tiene menos de 100 palabras o faltan campos críticos, poblar `preguntas_clarificacion` antes de continuar con el análisis.
+3. Siempre identificar al menos 3 procesos principales y elevar las mejoras a `oportunidades_quick_wins`.
 4. Los KPIs deben ser medibles y relevantes para el tamaño de empresa descrito.
+5. Incluir mínimo 2 referentes de mercado para guiar decisiones de UX y features.

@@ -24,7 +24,8 @@ Define la arquitectura del sistema a nivel macro y micro. Produce ADRs, estructu
 arquitectura:
   estilo: string
   justificacion_estilo: string
-  diagrama_alto_nivel: string
+  diagrama_alto_nivel: string          # Formato Mermaid obligatorio: C4Context o graph TD
+  diagrama_modulos: string             # Mermaid flowchart con dependencias entre módulos
   modulos:
     - nombre: string
       responsabilidad: string
@@ -50,6 +51,7 @@ arquitectura:
       consecuencias_positivas: string[]
       consecuencias_negativas: string[]
       relacion_negocio: string
+      reglas_negocio_referenciadas: string[]  # IDs RN-XXX que justifican este ADR
   modelo_datos_conceptual:
     entidades:
       - nombre: string
@@ -74,7 +76,8 @@ arquitectura:
 ```
 
 ## Reglas Internas
-1. Cada ADR vinculado a un requerimiento de negocio.
+1. Cada ADR vinculado a un requerimiento de negocio y al menos un ID `RN-XXX`.
 2. La arquitectura debe soportar las fases de escalabilidad definidas.
 3. Monolito modular es el default para proyectos pequeños/medianos.
 4. El modelo de datos refleja entidades del dominio de negocio, no tablas técnicas.
+5. Los diagramas usan Mermaid exclusivamente — son renderizables en docs y agentes IA.

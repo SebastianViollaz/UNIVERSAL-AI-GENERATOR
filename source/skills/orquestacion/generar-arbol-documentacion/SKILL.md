@@ -41,18 +41,24 @@ arbol_documentacion:
     contenido: string
     referencias_documentacion: string[]
     reglas_codificacion: string[]
+    comandos_frecuentes: string[]        # npm run dev, docker compose up, make test, etc.
+  quick_start_guide:
+    contenido: string                   # Documento que el desarrollador lee en <5 minutos
+    tiempo_estimado_setup: string
+    primer_prompt_recomendado: string   # El primer mensaje para probar que los agentes funcionan
   readme:
     contenido: string
   indice_navegacion:
     - seccion: string
       archivos: string[]
       para_que_sirve: string
-      leer_cuando: string
+      leer_cuando: string               # "Antes de implementar X", "Cuando tengas duda sobre Y"
 ```
 
 ## Reglas Internas
 1. Ningún archivo generado debe estar vacío o tener solo títulos.
 2. Cada archivo es autocontenido: comprensible sin leer otros archivos.
-3. El índice de navegación es obligatorio para que las IAs sepan dónde buscar.
+3. El índice de navegación es obligatorio con campo `leer_cuando` para que las IAs sepan dónde buscar.
 4. Formato Markdown consistente con headers, listas y tablas.
-5. Máximo 500 líneas por archivo.
+5. Máximo 500 líneas por archivo; si se excede, dividir en archivos vinculados con referencia cruzada.
+6. El `quick_start_guide` es obligatorio — es el primer documento que lee el programador.

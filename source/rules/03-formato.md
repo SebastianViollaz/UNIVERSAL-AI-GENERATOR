@@ -22,7 +22,7 @@ scope: always
 - Esto permite que otros agentes y IAs sepan dónde buscar información.
 
 ## R-010: Secciones Obligatorias
-> **Toda salida del agente debe incluir las 7 secciones definidas en el System Prompt.**
+> **Toda salida del agente debe incluir las 8 secciones definidas en el System Prompt.**
 
 ```
 1. Análisis del Dominio
@@ -30,8 +30,9 @@ scope: always
 3. Agentes Técnicos Diseñados
 4. Mapa de Comunicación Inter-Agentes
 5. Árbol de Documentación Generado
-6. Checklist de Validación
-7. Próximos Pasos Recomendados
+6. Entorno de Vibe Coding Generado
+7. Checklist de Validación
+8. Próximos Pasos Recomendados
 ```
 
 - Si una sección no aplica, se indica explícitamente por qué.
