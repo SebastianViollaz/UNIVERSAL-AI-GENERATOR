@@ -1,0 +1,173 @@
+# Configuración de exportación para cada IA objetivo
+# El script export.py usa este archivo para saber cómo transformar
+# los archivos fuente canónicos al formato esperado por cada herramienta.
+
+targets:
+
+  github-copilot:
+    name: "GitHub Copilot (VS Code)"
+    output_dir: "output/copilot"
+    mappings:
+      workspace_instructions:
+        source: "source/instructions/workspace.md"
+        target: ".github/copilot-instructions.md"
+        format: "plain_markdown"
+      rules:
+        source_dir: "source/rules/"
+        target_dir: ".github/instructions/"
+        extension: ".instructions.md"
+        frontmatter:
+          - description     # requerido para discovery
+          - applyTo         # glob pattern opcional
+      agents:
+        source_dir: "source/agents/"
+        target_dir: ".github/agents/"
+        extension: ".agent.md"
+        frontmatter:
+          - description     # requerido
+          - tools           # array de herramientas
+      skills:
+        source_dir: "source/skills/"
+        target_dir: ".github/skills/"
+        structure: "folder_with_skill_md"  # cada skill es carpeta/SKILL.md
+        frontmatter:
+          - name
+          - description
+      prompts:
+        source_dir: "source/prompts/"
+        target_dir: ".github/prompts/"
+        extension: ".prompt.md"
+        frontmatter:
+          - description
+          - mode            # agent mode
+
+  claude-code:
+    name: "Claude Code"
+    output_dir: "output/claude"
+    mappings:
+      workspace_instructions:
+        source: "source/instructions/workspace.md"
+        target: "CLAUDE.md"
+        format: "plain_markdown_with_imports"
+        import_syntax: "@path/to/file"
+      rules:
+        source_dir: "source/rules/"
+        target_dir: ".claude/rules/"
+        extension: ".md"
+        frontmatter:
+          - paths           # array de globs (campo de Claude)
+      agents:
+        source_dir: "source/agents/"
+        target_dir: ".claude/agents/"
+        extension: ".md"
+        frontmatter:
+          - description
+      skills:
+        source_dir: "source/skills/"
+        target_dir: ".claude/skills/"
+        structure: "folder_with_skill_md"
+      settings:
+        target: ".claude/settings.json"
+        format: "json"
+
+  cursor:
+    name: "Cursor"
+    output_dir: "output/cursor"
+    mappings:
+      workspace_instructions:
+        source: "source/instructions/workspace.md"
+        target: "AGENTS.md"
+        format: "plain_markdown"
+      rules:
+        source_dir: "source/rules/"
+        target_dir: ".cursor/rules/"
+        extension: ".mdc"
+        frontmatter:
+          - description     # para "apply intelligently"
+          - globs           # para "apply to specific files"
+          - alwaysApply     # true/false
+      agents:
+        source_dir: "source/agents/"
+        target_dir: ".cursor/rules/"
+        extension: ".mdc"
+        note: "Cursor no tiene agents nativos; se convierten en rules con context"
+
+  windsurf:
+    name: "Windsurf (Codeium)"
+    output_dir: "output/windsurf"
+    mappings:
+      workspace_instructions:
+        source: "source/instructions/workspace.md"
+        target: "AGENTS.md"
+        format: "plain_markdown"
+      rules:
+        source_dir: "source/rules/"
+        target_dir: ".windsurf/rules/"
+        extension: ".md"
+        frontmatter:
+          - trigger         # always_on | model_decision | glob | manual
+          - description
+          - globs
+      skills:
+        source_dir: "source/skills/"
+        target_dir: ".windsurf/skills/"
+        structure: "folder_with_skill_md"
+
+  aider:
+    name: "Aider"
+    output_dir: "output/aider"
+    mappings:
+      workspace_instructions:
+        source: "source/instructions/workspace.md"
+        target: "CONVENTIONS.md"
+        format: "concatenated_markdown"
+        note: "Todas las rules always-on se concatenan en un solo archivo"
+      config:
+        target: ".aider.conf.yml"
+        format: "yaml"
+        content:
+          read: ["CONVENTIONS.md"]
+
+  continue-dev:
+    name: "Continue.dev"
+    output_dir: "output/continue"
+    mappings:
+      rules:
+        source_dir: "source/rules/"
+        target_dir: ".continue/rules/"
+        extension: ".md"
+        frontmatter:
+          - name
+          - description
+          - globs
+          - alwaysApply
+      config:
+        target: ".continue/config.yaml"
+        format: "yaml"
+
+# Mapeo de frontmatter universal → campo específico por herramienta
+frontmatter_mapping:
+  universal:
+    name: "Identificador único"
+    description: "Descripción para discovery"
+    scope: "always | file_pattern | manual"
+    file_patterns: "Glob patterns de archivos"
+  transforms:
+    github-copilot:
+      scope=always: "applyTo: '**'"
+      scope=file_pattern: "applyTo: '{file_patterns}'"
+      file_patterns: "applyTo"
+    claude-code:
+      scope=file_pattern: "paths: [{file_patterns}]"
+      file_patterns: "paths"
+    cursor:
+      scope=always: "alwaysApply: true"
+      scope=file_pattern: "globs: '{file_patterns}'"
+      file_patterns: "globs"
+    windsurf:
+      scope=always: "trigger: always_on"
+      scope=file_pattern: "trigger: glob\nglobs: '{file_patterns}'"
+      scope=manual: "trigger: manual"
+    continue-dev:
+      scope=always: "alwaysApply: true"
+      scope=file_pattern: "globs: '{file_patterns}'"

@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Read files in source/",
+      "Read files in docs/",
+      "Read files in templates/",
+      "Read files in meta/",
+      "Read export.py",
+      "Read AGENTS.md",
+      "Read README.md"
+    ],
+    "ask": [
+      "Write files in source/",
+      "Write files in docs/",
+      "Modify export.py",
+      "Modify AGENTS.md",
+      "Modify README.md",
+      "Run shell commands"
+    ],
+    "deny": []
+  }
+}
