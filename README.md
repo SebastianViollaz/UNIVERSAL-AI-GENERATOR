@@ -41,14 +41,16 @@ BASE-GENERATOR/
 │   │       ├── configurador-entorno-ia.md ← Produce instrucciones y reglas de workspace
 │   │       └── orquestador-vibe.md      ← Coordina todo el flujo de Vibe Coding
 │   ├── skills/
-│   │   ├── negocio/                     ← 5 skills de análisis de negocio
-│   │   ├── tecnico/                     ← 5 skills de diseño técnico
-│   │   ├── orquestacion/               ← 5 skills de documentación y orquestación
-│   │   └── vibe-coding/                ← 5 skills de materialización para IA
+│   │   ├── negocio/                     ← 7 skills de análisis de negocio
+│   │   ├── tecnico/                     ← 9 skills de diseño técnico
+│   │   ├── orquestacion/               ← 7 skills de documentación y orquestación
+│   │   └── vibe-coding/                ← 7 skills de materialización para IA
 │   │       ├── generar-agentes-ia/      ← Produce .agent.md con contexto inyectado
 │   │       ├── generar-instrucciones-workspace/ ← Produce copilot-instructions/CLAUDE.md
 │   │       ├── generar-rules-ia/        ← Traduce reglas negocio → código
 │   │       ├── generar-skills-ia/       ← Crea skills del proyecto (ADRs, tests)
+│   │       ├── generar-ejemplos-interaccion/ ← Conversaciones reales por agente
+│   │       ├── generar-contexto-comprimido/ ← Contexto ≤2000 tokens para Aider
 │   │       └── optimizar-prompts-ia/    ← Optimiza tokens y efectividad
 │   └── prompts/
 │       └── generar-entorno.prompt.md    ← Prompt principal de ejecución
@@ -82,36 +84,36 @@ python export.py --target claude --output ./mi-proyecto-erp
 python export.py --target all --output ./exports
 ```
 
-### Paso 3: Inyectar el system prompt
+### Paso 3: Describir el proyecto a la IA
 
-Carga `system-prompt.md` como contexto de tu IA y describe tu proyecto:
+Abre tu IDE con los archivos exportados y describe tu proyecto:
 
 ```
-"Necesito un ERP para una empresa familiar de manufactura de muebles
-con 50 empleados en México. Actualmente usan Excel para todo."
+"Necesito un CRM para una empresa de seguros con 50 agentes comerciales.
+Necesito gestionar pólizas, clientes, cotizaciones y comisiones."
 ```
 
-### Paso 4: La IA genera el entorno
+### Paso 4: La IA ejecuta el flujo de 30 pasos (5 fases)
 
-El agente ejecutará las 8 secciones obligatorias:
-1. **Análisis del Dominio** — Rubro, procesos, regulaciones, KPIs
-2. **Agentes de Negocio Diseñados** — Especializados por rubro
-3. **Agentes Técnicos Diseñados** — Adaptados al contexto
-4. **Mapa de Comunicación Inter-Agentes** — Protocolo de colaboración
-5. **Árbol de Documentación Generado** — Todos los `.md` del proyecto
-6. **Entorno de Vibe Coding Generado** — Archivos funcionales para tu IA:
-   - Agentes IA (.agent.md) con contexto de negocio inyectado
-   - Instrucciones de workspace con glosario y convenciones
-   - Reglas de codificación por módulo
-   - Skills del proyecto (revisar reglas, consultar ADRs, generar tests)
-   - Prompts reutilizables para flujos comunes
-   - Quick Start Guide
-7. **Checklist de Validación** — Score ≥ 80/100 en 4 dimensiones
-8. **Próximos Pasos Recomendados** — Qué hacer primero
+**Fase 1 — Negocio:** entiende el dominio, mapea procesos, formaliza reglas, genera user stories y prioriza el backlog.
+
+**Fase 2 — Técnico:** selecciona el stack, diseña arquitectura y seguridad, genera modelo de datos físico (SQL ejecutable), contrato de API (OpenAPI 3.0) y convenciones de Git.
+
+**Fase 3 — Orquestación:** protocolo de comunicación inter-agentes, prompts y árbol de documentación.
+
+**Fase 4 — Vibe Coding:** genera los archivos funcionales para tu IA:
+- Agentes IA (.agent.md) con contexto de dominio inyectado
+- Instrucciones de workspace con glosario, stack y convenciones
+- Reglas de codificación por módulo (antipatrones con contraste de código)
+- Skills del proyecto (revisar reglas, consultar ADRs, generar tests)
+- Ejemplos de interacción reales por agente
+- Contexto comprimido para IAs con ventana limitada (Aider, terminal)
+
+**Fase 5 — Validación:** trazabilidad completa, validación con score ≥ 80/100, Quick Start Guide y exportación final.
 
 ### Paso 5: Copiar al workspace del proyecto
 
-Copia los archivos generados a la raíz de tu proyecto. La IA leerá automáticamente las instrucciones, reglas y agentes en su formato nativo.
+Copia los archivos generados a la raíz de tu nuevo proyecto. La IA leerá automáticamente las instrucciones, reglas y agentes. Primer prompt listo en menos de 5 minutos.
 
 ## Formato Canónico Universal
 
