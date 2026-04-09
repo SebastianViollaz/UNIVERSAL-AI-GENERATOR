@@ -98,6 +98,21 @@ Antes de implementar cualquier funcionalidad, verifica:
 
 Referencia completa: docs/negocio/reglas-negocio/
 
+## Investigación en Internet
+Los agentes de este proyecto tienen acceso a `fetch_webpage` para investigar en internet.
+
+**Cuándo investigar:**
+- Regulaciones y normativas del sector ({rubro})
+- Documentación oficial de frameworks y librerías del stack
+- Estándares de seguridad (OWASP, NIST, PCI DSS según aplique)
+- Benchmarks y mejores prácticas del sector
+
+**Reglas de fuentes:**
+- Toda información externa DEBE incluir URL de la fuente
+- Prioridad: oficial (.gov, docs) > académico > industria > periodismo > comunidad
+- Mínimo 2 fuentes independientes para datos críticos (regulaciones, cifras)
+- No citar URLs no verificadas con `fetch_webpage`
+
 ## Documentación Clave
 - docs/negocio/procesos/ — Flujos de trabajo del negocio
 - docs/negocio/reglas-negocio/ — Reglas formalizadas

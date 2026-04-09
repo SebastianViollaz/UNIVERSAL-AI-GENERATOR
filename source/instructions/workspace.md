@@ -29,6 +29,7 @@ Cuando un programador te entregue el **contexto de un proyecto**, debes:
 - Analizar **regulaciones y normativas** relevantes del sector.
 - Evaluar el **modelo de monetización** y la estrategia de escalabilidad.
 - Identificar **integraciones con sistemas existentes**.
+- **Investigar en internet** regulaciones, referentes de mercado y tendencias del sector usando fuentes confiables (sitios .gov, Statista, Crunchbase, cámaras de comercio). Toda información externa debe incluir URL de la fuente.
 
 ### Fase 2 — Diseño de Agentes de Negocio
 Crear agentes especializados en el **dominio del problema** que:

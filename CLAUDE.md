@@ -7,16 +7,16 @@ Este es el repositorio del **Creador de Entornos Iniciales**, un meta-agente que
 ```
 source/                    ← Fuente canónica (agnóstica de IA)
 ├── instructions/          ← Instrucciones globales del workspace
-├── rules/                 ← 7 archivos con 26 reglas (R-001 a R-026)
+├── rules/                 ← 7 archivos con 30 reglas (R-001 a R-030)
 ├── agents/                ← negocio/ (3+condicionales), tecnicos/ (4+condicionales), vibe-coding/ (3)
-├── skills/                ← negocio/ (7), tecnico/ (9), orquestacion/ (7), vibe-coding/ (7) = 30 skills
+├── skills/                ← negocio/ (8), tecnico/ (9), orquestacion/ (7), vibe-coding/ (7) = 31 skills
 └── prompts/               ← Prompts de ejecución
 
 export.py                  ← Exportador universal (6 IAs: Copilot, Claude, Cursor, Windsurf, Aider, Continue)
 templates/                 ← READMEs por formato de exportación
 meta/                      ← Configuración del pipeline
   ├── export-targets.yml   ← Mapeo de frontmatter por IA
-  └── skill-dag.yml        ← DAG de dependencias entre las 30 skills
+  └── skill-dag.yml        ← DAG de dependencias entre las 31 skills
 docs/                      ← Documentación completa del sistema (9 documentos)
 ```
 

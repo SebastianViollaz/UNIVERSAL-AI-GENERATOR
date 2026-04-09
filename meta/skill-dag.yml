@@ -14,10 +14,28 @@ skills:
       - roles_usuario
       - regulaciones_aplicables
       - preguntas_clarificacion
+      - fuentes_consultadas
     consumed_by:
+      - investigar-fuentes-internet
       - mapear-procesos-negocio
       - disenar-agentes-negocio
       - analizar-escalabilidad-negocio
+
+  investigar-fuentes-internet:
+    depends_on:
+      - analizar-dominio-negocio
+    produces:
+      - hallazgos_investigacion
+      - regulaciones_verificadas
+      - fuentes_confiables
+    consumed_by:
+      - mapear-procesos-negocio
+      - formalizar-reglas-negocio
+      - disenar-agentes-negocio
+      - analizar-escalabilidad-negocio
+      - disenar-seguridad-sistema
+      - generar-instrucciones-workspace
+      - generar-agentes-ia
       - estructurar-agentes-tecnicos
       - disenar-seguridad-sistema
       - generar-instrucciones-workspace

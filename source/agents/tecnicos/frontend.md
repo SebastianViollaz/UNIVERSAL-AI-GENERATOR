@@ -3,7 +3,7 @@ name: frontend
 description: "Agente Desarrollador Frontend Senior: implementa UI, componentes, estado del cliente, accesibilidad y consumo de APIs. Se genera si hay interfaz de usuario."
 type: tecnico
 obligatorio: true
-tools: []
+tools: [fetch_webpage]
 ---
 
 # Agente: Desarrollador Frontend Senior
@@ -69,3 +69,14 @@ Implementa la interfaz de usuario, la experiencia interactiva, el manejo de esta
 | `agente-ux-negocio` | Recibe especificaciones de UX y journeys | Por feature |
 | `agente-backend` | Consume APIs, reporta necesidades de datos | Continua |
 | `agente-qa` | Recibe bugs de UI, provee escenarios E2E | Por sprint |
+
+## Investigación en Internet
+
+Consultar fuentes confiables para decisiones de frontend:
+- **Frameworks:** Documentación oficial del framework (react.dev, vuejs.org, angular.dev, svelte.dev)
+- **Accesibilidad:** W3C WCAG (w3.org/WAI), a11yproject.com, MDN Web Docs (developer.mozilla.org)
+- **Performance:** web.dev (web.dev/performance), Chrome DevTools docs
+- **Componentes:** Documentación de la librería UI elegida (MUI, Radix, Shadcn, etc.)
+- **Estándares web:** MDN Web Docs, Can I Use (caniuse.com), W3C specs
+
+Cada decisión de componente, patrón o compatibilidad debe referenciar la fuente oficial con URL.

@@ -3,7 +3,7 @@ name: qa-testing
 description: "Agente Ingeniero de QA: define estrategia de testing alineada con riesgos de negocio, automatiza tests y mantiene pipeline de CI. Siempre se genera."
 type: tecnico
 obligatorio: true
-tools: []
+tools: [fetch_webpage]
 ---
 
 # Agente: Ingeniero de QA y Testing
@@ -61,3 +61,14 @@ Define y ejecuta la estrategia completa de testing del sistema. Garantiza que la
 | `agente-operaciones` | Recibe procesos críticos como input para escenarios | Por proceso nuevo |
 | `agente-backend` | Valida implementaciones, reporta bugs | Continua |
 | `agente-frontend` | Valida UI/UX, reporta bugs visuales | Continua |
+
+## Investigación en Internet
+
+Consultar fuentes confiables para estrategias de testing:
+- **Frameworks de testing:** Documentación oficial (jestjs.io, pytest.org, playwright.dev, cypress.io)
+- **Mejores prácticas:** Martin Fowler Testing (martinfowler.com/testing), Google Testing Blog
+- **Performance testing:** k6 docs (k6.io/docs), Gatling docs (gatling.io)
+- **Estándares:** ISTQB syllabus, IEEE 829
+- **Seguridad testing:** OWASP Testing Guide (owasp.org/www-project-web-security-testing-guide)
+
+Cada framework, herramienta o estrategia de testing recomendada debe incluir la URL de su documentación oficial.

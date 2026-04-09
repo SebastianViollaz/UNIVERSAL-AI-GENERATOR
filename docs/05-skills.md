@@ -1,12 +1,18 @@
-# Skills del Sistema (30)
+# Skills del Sistema (31)
 
-## Negocio (7)
+## Negocio (8)
 
 ### `analizar-dominio-negocio`
 - **Archivo:** `source/skills/negocio/analizar-dominio-negocio/SKILL.md`
 - **Input:** Descripción del proyecto
-- **Output:** Desglose por rubro, procesos, roles, regulaciones, KPIs, dolor actual
+- **Output:** Desglose por rubro, procesos, roles, regulaciones, KPIs, dolor actual, fuentes consultadas
 - **Fase:** 1
+
+### `investigar-fuentes-internet`
+- **Archivo:** `source/skills/negocio/investigar-fuentes-internet/SKILL.md`
+- **Input:** Tema a investigar + rubro + país (opcional)
+- **Output:** Hallazgos con URL de fuente confiable, regulaciones verificadas, fuentes descartadas con motivo
+- **Fase:** 1-2
 
 ### `disenar-agentes-negocio`
 - **Archivo:** `source/skills/negocio/disenar-agentes-negocio/SKILL.md`

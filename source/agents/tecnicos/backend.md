@@ -3,7 +3,7 @@ name: backend
 description: "Agente Desarrollador Backend Senior: implementa APIs, lógica de dominio, persistencia, integraciones y seguridad a nivel servidor. Siempre se genera."
 type: tecnico
 obligatorio: true
-tools: []
+tools: [fetch_webpage]
 ---
 
 # Agente: Desarrollador Backend Senior
@@ -73,3 +73,14 @@ Implementa la lógica del servidor, APIs, servicios de dominio, persistencia de 
 | `agente-operaciones` | Recibe especificaciones funcionales de procesos | Por cada feature |
 | `agente-frontend` | Provee contratos de API, recibe feedback | Continua |
 | `agente-qa` | Recibe reportes de bugs, provee specs para tests | Por sprint |
+
+## Investigación en Internet
+
+Consultar documentación oficial y fuentes confiables para decisiones de implementación:
+- **Documentación de frameworks:** Sitios oficiales del stack seleccionado (docs.djangoproject.com, expressjs.com, docs.spring.io, etc.)
+- **Seguridad:** OWASP Cheat Sheet Series (cheatsheetseries.owasp.org), CWE (cwe.mitre.org)
+- **APIs y estándares:** RFC 7807 (Problem Details), OpenAPI spec (swagger.io), JSON:API (jsonapi.org)
+- **Base de datos:** Documentación oficial del motor (postgresql.org, dev.mysql.com, mongodb.com/docs)
+- **Integraciones:** Documentación de APIs de servicios externos a integrar
+
+Cada librería, patrón o decisión de implementación debe referenciar la documentación oficial con URL.

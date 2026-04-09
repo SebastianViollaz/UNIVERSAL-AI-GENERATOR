@@ -61,9 +61,14 @@ agentes_condicionales_recomendados:
 ```
 
 ## Reglas Internas
-1. Mínimo 3 agentes de negocio por proyecto.
+1. **Mínimo 5 agentes** por proyecto (3 obligatorios + 2 del dominio específico).
 2. Siempre incluir un "Agente Estratega de Negocio" que piense en escalabilidad.
 3. Cada agente debe tener capacidades propositivas: no solo describen, también mejoran.
 4. Cubrir como mínimo: operaciones, finanzas/métricas, y experiencia de usuario.
 5. El `prompt_base` sigue la estructura mínima definida: identidad, contexto, decisiones, restricciones, formato.
 6. Siempre evaluar y recomendar agentes condicionales del catálogo en AGENTS.md.
+7. **Agentes del dominio — OBLIGATORIO:** Además de los 3 genéricos (estratega, operaciones, UX), diseñar agentes especializados en el dominio del usuario. Analiza el rubro y pregúntate: "¿Qué expertos contrataría una empresa real de este rubro?" Cada experto = 1 agente.
+   - Videojuego: game designer, level designer, especialista en monetización, especialista en retención, audio designer, QA de juegos
+   - SaaS: growth hacker, customer success, DevOps, seguridad, onboarding
+   - Salud: compliance, farmacia, facturación médica, telemedicina
+   - El catálogo NO es exhaustivo — innovar según el dominio.

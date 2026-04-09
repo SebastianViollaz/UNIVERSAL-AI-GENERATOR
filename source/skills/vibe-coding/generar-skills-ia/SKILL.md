@@ -60,6 +60,120 @@ skills_proyecto:
 
 ## Skills Estándar a Generar
 
+Las siguientes son skills base que aplican a la mayoría de proyectos. Además de estas, **genera skills específicas del dominio** (ver sección siguiente).
+
+### ITERACIÓN OBLIGATORIA — Una carpeta por skill
+```
+PARA CADA skill diseñada:
+  1. Crear carpeta: .github/skills/{nombre-skill}/
+  2. Crear archivo: .github/skills/{nombre-skill}/SKILL.md
+  3. Contenido sigue el Template Mínimo Obligatorio
+FIN PARA
+```
+
+**PROHIBIDO:** Combinar múltiples skills en un solo archivo. Cada skill = 1 carpeta con 1 SKILL.md.
+**MÍNIMO:** 5 skills. Si tienes menos, el análisis de dominio fue insuficiente.
+
+### Skills específicas del dominio — OBLIGATORIAS
+Además de las skills estándar, diseña skills que sean únicas para el dominio del usuario. Ejemplos:
+- Videojuego: `configurar-mecanica-juego`, `balancear-dificultad`, `optimizar-rendimiento-escena`, `crear-enemigo-tipo`, `disenar-sistema-progresion`, `crear-ui-juego`
+- E-commerce: `crear-flujo-checkout`, `configurar-pasarela-pago`, `crear-regla-descuento`, `generar-reporte-ventas`
+- Salud: `validar-compliance-hipaa`, `crear-formulario-clinico`, `generar-prescripcion`
+
+### Meta-skills de mantenimiento — OBLIGATORIAS (siempre se generan)
+Estas skills permiten al usuario crear y modificar agentes, skills y reglas después de la generación inicial. **NUNCA deben omitirse ni borrarse.**
+
+#### M1. crear-agente
+```markdown
+---
+name: crear-agente
+description: "Crea un nuevo agente .agent.md siguiendo las convenciones del proyecto. Usa cuando necesites un experto nuevo que no existe."
+---
+
+# Skill: Crear Agente Nuevo
+
+## Contexto
+Este proyecto usa agentes IA especializados en `.github/agents/`. Cada agente es un archivo `.agent.md` con frontmatter y prompt.
+
+## Proceso
+1. Recibe: nombre del agente, área de expertise, tipo (negocio/técnico)
+2. Lee `.github/agents/` para ver los agentes existentes y mantener consistencia
+3. Genera el archivo `.github/agents/{nombre}.agent.md` con:
+   - Frontmatter: description + tools (solo lectura para negocio, lectura+escritura para técnico)
+   - Identidad y contexto del proyecto inyectado
+   - Responsabilidades y restricciones
+   - Sección "Cuándo consultar a otros agentes"
+4. Tools para negocio: read_file, grep_search, semantic_search, list_dir, fetch_webpage
+5. Tools para técnico: read_file, create_file, replace_string_in_file, run_in_terminal, grep_search, semantic_search, list_dir, get_errors, fetch_webpage
+6. Verifica: < 150 líneas, frontmatter válido, no duplica agente existente
+
+## Ejemplo
+Input: "Necesito un agente especialista en shaders para Unity"
+Output: `.github/agents/especialista-shaders.agent.md` con contexto del proyecto, conocimiento de URP/HDRP, y restricciones de rendimiento.
+```
+
+#### M2. crear-skill
+```markdown
+---
+name: crear-skill
+description: "Crea una nueva skill SKILL.md siguiendo las convenciones del proyecto. Usa cuando necesites automatizar una tarea recurrente."
+---
+
+# Skill: Crear Skill Nueva
+
+## Contexto
+Este proyecto usa skills en `.github/skills/{nombre}/SKILL.md`. Cada skill es un flujo invocable por agentes.
+
+## Proceso
+1. Recibe: nombre de la skill, propósito, agentes que la usarán
+2. Lee `.github/skills/` para ver las skills existentes y mantener consistencia
+3. Crea carpeta `.github/skills/{nombre}/`
+4. Genera `SKILL.md` con el template:
+   - Frontmatter: name + description
+   - Sección "Contexto de Negocio" con reglas relevantes
+   - Sección "Proceso" con pasos numerados
+   - Sección "Ejemplo" con input/output real del dominio
+5. Verifica: < 100 líneas, frontmatter válido, no duplica skill existente
+
+## Ejemplo
+Input: "Skill para optimizar texturas en Unity"
+Output: `.github/skills/optimizar-texturas/SKILL.md` con proceso de análisis de resolución, compresión y atlas.
+```
+
+#### M3. modificar-agente
+```markdown
+---
+name: modificar-agente
+description: "Modifica un agente existente: agrega responsabilidades, ajusta restricciones o actualiza contexto. Usa cuando un agente necesita evolucionar."
+---
+
+# Skill: Modificar Agente Existente
+
+## Proceso
+1. Recibe: nombre del agente a modificar + cambios deseados
+2. Lee `.github/agents/{nombre}.agent.md` actual
+3. Aplica los cambios manteniendo la estructura: frontmatter, identidad, contexto, herramientas, restricciones
+4. Verifica: < 150 líneas, frontmatter sigue válido, tools correctos para el tipo
+5. NO elimina secciones existentes a menos que se pida explícitamente
+```
+
+#### M4. modificar-skill
+```markdown
+---
+name: modificar-skill
+description: "Modifica una skill existente: actualiza el proceso, agrega pasos o ajusta ejemplos. Usa cuando una skill necesita evolucionar."
+---
+
+# Skill: Modificar Skill Existente
+
+## Proceso
+1. Recibe: nombre de la skill a modificar + cambios deseados
+2. Lee `.github/skills/{nombre}/SKILL.md` actual
+3. Aplica los cambios manteniendo la estructura: frontmatter, contexto, proceso, ejemplo
+4. Verifica: < 100 líneas, frontmatter sigue válido
+5. NO elimina secciones existentes a menos que se pida explícitamente
+```
+
 ### 1. revisar-regla-negocio
 ```markdown
 ---
@@ -173,6 +287,40 @@ description: "Scaffolding de un nuevo módulo siguiendo la arquitectura y conven
 5. Actualiza el índice de módulos
 ```
 
+### 7. investigar-en-internet
+```markdown
+---
+name: investigar-en-internet
+description: "Investiga en internet información relevante sobre el dominio del proyecto usando fuentes confiables. Toda información externa debe incluir URL de la fuente."
+---
+
+# Skill: Investigar en Internet
+
+## Contexto de Negocio
+Cuando un agente necesita información que no está en la documentación del proyecto (regulaciones actualizadas, documentación de APIs externas, estándares del sector, benchmarks de mercado), debe investigar en internet con fuentes verificables.
+
+## Fuentes Confiables (orden de prioridad)
+1. **Oficiales:** Sitios .gov/.gob, documentación oficial de frameworks, RFCs
+2. **Académicas:** Google Scholar, IEEE, ACM, arXiv
+3. **Industria:** Gartner, Forrester, ThoughtWorks, McKinsey (resúmenes públicos)
+4. **Estándares:** ISO, OWASP, W3C, NIST, PCI DSS
+5. **Periodismo tech:** Publicaciones reconocidas del sector
+
+## Proceso
+1. Recibe: tema a investigar + contexto del proyecto
+2. Usa `fetch_webpage` para consultar fuentes confiables
+3. Verifica: mínimo 2 fuentes independientes para datos críticos
+4. Descarta fuentes sin autoría clara o con más de 3 años (tecnología) / 2 años (regulaciones)
+5. Retorna: hallazgos con URL verificada, tipo de fuente y nivel de confiabilidad
+
+## Ejemplo
+Input: "¿Qué estándares de accesibilidad aplican para una app de salud en la UE?"
+Output:
+- EN 301 549 (estándar europeo de accesibilidad ICT) — fuente: etsi.org — confiabilidad: alta
+- WCAG 2.1 AA (requisito base para EN 301 549) — fuente: w3.org/WAI — confiabilidad: alta
+- European Accessibility Act (EAA, aplica desde junio 2025) — fuente: ec.europa.eu — confiabilidad: alta
+```
+
 ## Skills Condicionales (según el proyecto)
 
 | Condición | Skill Adicional |
@@ -184,10 +332,13 @@ description: "Scaffolding de un nuevo módulo siguiendo la arquitectura y conven
 | Tiene integraciones | `simular-api-externa` — Mock de APIs de terceros |
 
 ## Reglas Internas
-1. Cada skill tiene un ejemplo concreto del dominio del proyecto, no genérico.
-2. Las skills referencian archivos reales del proyecto (no rutas hipotéticas).
-3. El output de cada skill es accionable: código, checklist o diagnóstico.
-4. Las skills de negocio NO generan código; las técnicas SÍ.
-5. Toda skill de testing vincula a la regla de negocio que verifica.
-6. Todas las skills generadas siguen el template mínimo: frontmatter + Contexto de Negocio + Proceso + Ejemplo.
-7. La sección "Contexto de Negocio" inyecta los IDs de reglas relevantes directamente en la skill.
+1. **Una carpeta por skill** — NUNCA combinar skills en un solo archivo. Cada carpeta en `.github/skills/` contiene exactamente un `SKILL.md`.
+2. Cada skill tiene un ejemplo concreto del dominio del proyecto, no genérico.
+3. Las skills referencian archivos reales del proyecto (no rutas hipotéticas).
+4. El output de cada skill es accionable: código, checklist o diagnóstico.
+5. Las skills de negocio NO generan código; las técnicas SÍ.
+6. Toda skill de testing vincula a la regla de negocio que verifica.
+7. Todas las skills generadas siguen el template mínimo: frontmatter + Contexto de Negocio + Proceso + Ejemplo.
+8. La sección "Contexto de Negocio" inyecta los IDs de reglas relevantes directamente en la skill.
+9. **Generar skills del dominio** además de las estándar. Si el proyecto es de videojuegos, las skills deben reflejar tareas de desarrollo de videojuegos. Si es de salud, tareas de compliance médico. Etc.
+10. **NO modificar ni eliminar archivos preexistentes** del workspace. Solo crear archivos nuevos.

@@ -80,7 +80,47 @@ scope: always
 ## Prioridad de Reglas de Vibe Coding
 
 1. **R-019** (Output Ejecutable) — Si no funciona, nada más importa
-2. **R-020** (Contexto Inyectado) — La IA de codificación necesita saber
-3. **R-021** (Agentes Autónomos) — Cada agente funciona solo
-4. **R-024** (Token Budget) — Respetar límites
-5. R-022, R-023, R-025, R-026 en orden
+2. **R-027** (No Tocar Preexistentes) — Proteger el workspace del usuario
+3. **R-020** (Contexto Inyectado) — La IA de codificación necesita saber
+4. **R-021** (Agentes Autónomos) — Cada agente funciona solo
+5. **R-024** (Token Budget) — Respetar límites
+6. R-022, R-023, R-025, R-026 en orden
+
+## R-027: No Modificar Archivos Preexistentes
+> **El generador SOLO crea archivos nuevos dentro de `.github/`. NUNCA modifica, mueve, renombra ni elimina archivos que ya existían en el workspace.**
+
+- El workspace del usuario puede tener código, assets, configuraciones. Son intocables.
+- Si hay conflicto de nombres, el generador agrega sufijo o pregunta al usuario.
+- **Severidad:** Crítica. Borrar o reorganizar el código del usuario destruye confianza.
+
+## R-028: Un Archivo por Agente, Una Carpeta por Skill
+> **Cada agente diseñado se materializa como un archivo `.agent.md` individual. Cada skill se materializa como una carpeta con `SKILL.md` individual.**
+
+- NUNCA combinar agentes en un solo archivo catch-all.
+- NUNCA combinar skills en un solo archivo.
+- Mínimo 5 agentes y 5 skills por entorno generado.
+- Si el mínimo no se alcanza, el análisis de dominio fue insuficiente — repetir la fase 1.
+
+## R-029: Meta-herramientas Obligatorias e Intocables
+> **Todo entorno generado incluye un agente configurador y 4 meta-skills (crear-agente, crear-skill, modificar-agente, modificar-skill) que permiten evolucionar el entorno después de la generación inicial.**
+
+- El agente `configurador-entorno` y las meta-skills M1-M4 se generan SIEMPRE.
+- NUNCA deben ser eliminados por ningún agente, en ninguna circunstancia.
+- Si un agente sugiere eliminar skills o agentes "que no se usan", debe excluir explícitamente:
+  - `.github/agents/configurador-entorno.agent.md`
+  - `.github/skills/crear-agente/`
+  - `.github/skills/crear-skill/`
+  - `.github/skills/modificar-agente/`
+  - `.github/skills/modificar-skill/`
+- **Severidad:** Crítica. Sin estas herramientas, el usuario pierde la capacidad de evolucionar su entorno y debe recrear todo desde cero.
+
+## R-030: Investigación con Fuentes Confiables
+> **Todo agente IA generado debe tener la capacidad de investigar en internet y DEBE citar fuentes confiables con URL para toda información externa.**
+
+- Los agentes de negocio incluyen `fetch_webpage` en sus tools para investigar regulaciones, mercado y tendencias.
+- Los agentes técnicos incluyen `fetch_webpage` en sus tools para consultar documentación oficial y estándares.
+- Toda afirmación basada en investigación incluye: nombre de la fuente, URL directa, tipo (oficial/académico/industria).
+- Jerarquía de confiabilidad: oficial (.gov, docs oficiales) > académico (scholar, IEEE) > industria (Gartner, Forrester) > periodismo (tech blogs reconocidos) > comunidad (Stack Overflow, foros).
+- PROHIBIDO: Citar URLs inventadas o no verificadas. Solo incluir URLs comprobadas con `fetch_webpage`.
+- Cada entorno generado incluye una skill `investigar-en-internet` que estandariza el proceso de búsqueda.
+- **Severidad:** Alta. Información sin fuente verificable reduce la credibilidad del entorno generado.

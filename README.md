@@ -32,7 +32,7 @@ BASE-GENERATOR/
 │   │   ├── 04-comunicacion.md          ← R-011 a R-013
 │   │   ├── 05-escalabilidad.md         ← R-014 a R-015
 │   │   ├── 06-validacion.md            ← R-016 a R-018
-│   │   └── 07-vibe-coding.md           ← R-019 a R-026 (Vibe Coding)
+│   │   └── 07-vibe-coding.md           ← R-019 a R-030 (Vibe Coding)
 │   ├── agents/
 │   │   ├── negocio/                     ← 3 obligatorios + catálogo condicionales
 │   │   ├── tecnicos/                    ← 4 obligatorios + catálogo condicionales
@@ -41,7 +41,7 @@ BASE-GENERATOR/
 │   │       ├── configurador-entorno-ia.md ← Produce instrucciones y reglas de workspace
 │   │       └── orquestador-vibe.md      ← Coordina todo el flujo de Vibe Coding
 │   ├── skills/
-│   │   ├── negocio/                     ← 7 skills de análisis de negocio
+│   │   ├── negocio/                     ← 8 skills de análisis de negocio
 │   │   ├── tecnico/                     ← 9 skills de diseño técnico
 │   │   ├── orquestacion/               ← 7 skills de documentación y orquestación
 │   │   └── vibe-coding/                ← 7 skills de materialización para IA

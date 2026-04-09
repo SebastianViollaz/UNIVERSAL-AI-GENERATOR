@@ -70,11 +70,19 @@ analisis_dominio:
     - pregunta: string
       campo_afectado: string
       urgencia: enum[bloquea_analisis, mejora_calidad, opcional]
+  fuentes_consultadas:
+    - nombre: string
+      url: string
+      tipo: enum[oficial, academico, industria, periodismo, comunidad]
+      dato_obtenido: string
 ```
 
 ## Reglas Internas
-1. Nunca asumir procesos genéricos. Investigar particularidades del rubro.
+1. Nunca asumir procesos genéricos. Investigar particularidades del rubro usando `fetch_webpage` en fuentes confiables (sitios .gov, cámaras de comercio, reguladores sectoriales).
 2. Si la descripción tiene menos de 100 palabras o faltan campos críticos, poblar `preguntas_clarificacion` antes de continuar con el análisis.
 3. Siempre identificar al menos 3 procesos principales y elevar las mejoras a `oportunidades_quick_wins`.
 4. Los KPIs deben ser medibles y relevantes para el tamaño de empresa descrito.
 5. Incluir mínimo 2 referentes de mercado para guiar decisiones de UX y features.
+6. Las regulaciones deben verificarse en fuentes oficiales (.gov/.gob, portales de reguladores). Incluir URL de la fuente.
+7. Los referentes de mercado deben investigarse en fuentes de industria (Crunchbase, Statista, reportes sectoriales). Incluir URL.
+8. Toda afirmación sobre el sector, cifra o regulación citada debe tener fuente verificable con URL.

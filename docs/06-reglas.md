@@ -1,4 +1,4 @@
-# Reglas de Ejecución (26)
+# Reglas de Ejecución (30)
 
 Las reglas están organizadas en 7 categorías y se almacenan en `source/rules/`.
 
@@ -62,3 +62,7 @@ Las reglas están organizadas en 7 categorías y se almacenan en `source/rules/`
 | R-024 | Token budget | Instrucciones < 300 líneas, agentes < 150 líneas, rules < 50 líneas cada una |
 | R-025 | Quick Start obligatorio | Todo entorno incluye guía de inicio en < 5 minutos |
 | R-026 | Bidireccionalidad | Los agentes IA reflejan tanto la perspectiva de negocio como la técnica |
+| R-027 | No tocar preexistentes | El generador SOLO crea archivos nuevos, NUNCA modifica los que ya existían |
+| R-028 | Un archivo por agente/skill | Cada agente = 1 archivo, cada skill = 1 carpeta con SKILL.md |
+| R-029 | Meta-herramientas obligatorias | Todo entorno incluye agente configurador y 4 meta-skills para evolucionar |
+| R-030 | Investigación con fuentes confiables | Todo agente IA tiene `fetch_webpage` y DEBE citar fuentes con URL verificada |

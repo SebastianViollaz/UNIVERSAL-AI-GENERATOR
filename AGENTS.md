@@ -66,6 +66,7 @@ Cuando el usuario describe un proyecto (ej: "ERP para empresa familiar", "CRM de
 
 ### Negocio
 - `analizar-dominio-negocio` — Desglosar proyecto en componentes de negocio
+- `investigar-fuentes-internet` — Investigar en internet con fuentes confiables (regulaciones, mercado, tendencias)
 - `disenar-agentes-negocio` — Crear agentes expertos del dominio
 - `mapear-procesos-negocio` — Detallar flujos con excepciones y métricas
 - `analizar-escalabilidad-negocio` — Proyectar fases de crecimiento
@@ -116,3 +117,4 @@ Cuando el usuario describe un proyecto (ej: "ERP para empresa familiar", "CRM de
 10. **Contexto inyectado** — Los agentes IA incluyen el contexto de negocio DENTRO del prompt, no como referencia
 11. **Agentes autónomos** — Cada agente IA funciona sin que los otros estén activos
 12. **Token budget** — Instrucciones < 300 líneas, agentes < 150, rules < 50 cada una
+13. **Investigación con fuentes** — Toda información externa investigada incluye URL de fuente confiable verificada

@@ -57,7 +57,12 @@ def extract_frontmatter(content: str) -> dict:
             for line in block.split("\n"):
                 if ":" in line:
                     key, val = line.split(":", 1)
-                    fm[key.strip()] = val.strip().strip('"').strip("'")
+                    val = val.strip().strip('"').strip("'")
+                    # Handle inline YAML lists: [item1, item2]
+                    if val.startswith("[") and val.endswith("]"):
+                        items = val[1:-1].split(",")
+                        val = [i.strip().strip('"').strip("'") for i in items if i.strip()]
+                    fm[key.strip()] = val
     return fm
 
 
@@ -130,12 +135,17 @@ def export_copilot(output_dir: Path):
             fm = extract_frontmatter(content)
             body = strip_frontmatter(content)
             agent_type = fm.get("type", "")
+            source_tools = fm.get("tools", [])
             if agent_type == "tecnico":
                 tools = ["read_file", "create_file", "replace_string_in_file", "run_in_terminal", "grep_search", "semantic_search", "list_dir", "get_errors"]
             elif agent_type == "vibe-coding":
                 tools = ["read_file", "create_file", "replace_string_in_file", "grep_search", "semantic_search", "list_dir"]
             else:
                 tools = ["read_file", "grep_search", "semantic_search", "list_dir"]
+            # Merge source-declared tools (e.g. fetch_webpage) without duplicates
+            for t in source_tools:
+                if t and t not in tools:
+                    tools.append(t)
             new_fm = build_frontmatter({
                 "description": fm.get("description", ""),
                 "tools": tools,
